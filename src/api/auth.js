@@ -24,6 +24,23 @@
 //   return res.json();
 // };
 // Toggle this to true to use mock data instead of real API calls
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error('Failed to parse JWT', e);
+    return null;
+  }
+}
+
 const USE_MOCK = false;
 
 const BASE_URL = 'http://localhost:8081';
@@ -56,10 +73,15 @@ const res = await fetch(`${BASE_URL}/user/auth/login`, {
   console.log('Received token:', token);
 
 localStorage.setItem('token', token);
+localStorage.setItem('userId', '2');  // test with a valid numeric user id
+
 console.log('Token saved in localStorage:', localStorage.getItem('token'));// ✅ save to localStorage
 
   return token;
+
+  
 };
+
 
 export const signup = async (first_name, last_name, email, password) => {
   if (USE_MOCK) {

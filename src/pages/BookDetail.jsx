@@ -1,23 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchBookDetail } from '../api/fetchBooksDetails';  // Correct import
+import { fetchBookDetail } from '../api/fetchBooksDetails';  // Your book detail API
+import { fetchBookReviews } from '../api/fetchReviews';      // Your review API (adjust path if needed)
 import ReviewModal from '../pages/ReviewModal';
 import '../styles/BookDetail.css';
 
 const BookDetail = () => {
   const { bookId } = useParams();
   const navigate = useNavigate();
+
   const [book, setBook] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [showReviewModal, setShowReviewModal] = useState(false);
 
+  // Fetch book details
   useEffect(() => {
-    fetchBookDetail(bookId)  // Use fetchBookDetail here, not getBookDetails
+    fetchBookDetail(bookId)
       .then(data => setBook(data))
       .catch(err => console.error('Error fetching book:', err));
   }, [bookId]);
 
+  // Fetch reviews
+  useEffect(() => {
+    fetchBookReviews(bookId)
+      .then(data => setReviews(data))
+      .catch(err => console.error('Error fetching reviews:', err));
+  }, [bookId]);
+
+  // Refresh reviews after submitting a new review
+  const onReviewSubmit = () => {
+    fetchBookReviews(bookId)
+      .then(data => setReviews(data))
+      .catch(err => console.error('Error fetching reviews:', err));
+    setShowReviewModal(false);
+  };
+
   const handleAddToCart = () => {
-    // You can dispatch to cart context or update localStorage
     navigate('/cart');
   };
 
@@ -32,13 +50,16 @@ const BookDetail = () => {
       <div className="book-image">
         <img src={book.imageUrl} alt={book.title} />
       </div>
+
       <div className="book-info">
         <h2>{book.title}</h2>
-        <p><strong>Author:</strong> {book.author}</p>
-        <p><strong>Genre:</strong> {book.genre}</p>
-        <p><strong>Description:</strong> {book.description}</p>
-        <p><strong>Price:</strong> ₹{book.price}</p>
-        <p><strong>Average Rating:</strong> ⭐ {book.averageRating || 'No ratings yet'}</p>
+        <p><strong>Authors:</strong> {book.authors || 'Unknown'}</p>
+        <p><strong>Genres:</strong> {book.genres || 'N/A'}</p>
+        <p><strong>Description:</strong> {book.description || 'No description available.'}</p>
+        <p><strong>Pages:</strong> {book.pages}</p>
+        <p><strong>Price:</strong> ₹{book.price ?? 'Not Available'}</p>
+        <p><strong>Average Rating:</strong> ⭐ {book.rating || 'No ratings yet'}</p>
+        <p><strong>ISBN:</strong> {book.isbn}</p>
 
         <button onClick={handleAddToCart}>Add to Cart</button>
         <button onClick={handleBorrow}>Borrow</button>
@@ -46,10 +67,10 @@ const BookDetail = () => {
 
         <h3>Reviews</h3>
         <ul>
-          {book.reviews && book.reviews.length > 0 ? book.reviews.map((review, idx) => (
+          {reviews.length > 0 ? reviews.map((review, idx) => (
             <li key={idx}>
-              <strong>{review.user}</strong>: ⭐ {review.rating}<br />
-              {review.comment}
+              <strong>{review.title || `User ${review.userId}`}</strong>: ⭐ {review.rating}<br />
+              {review.review}
             </li>
           )) : <p>No reviews yet.</p>}
         </ul>
@@ -59,10 +80,7 @@ const BookDetail = () => {
         <ReviewModal
           bookId={bookId}
           onClose={() => setShowReviewModal(false)}
-          onReviewSubmit={() => {
-            fetchBookDetail(bookId).then(data => setBook(data)); // also use fetchBookDetail here
-            setShowReviewModal(false);
-          }}
+          onReviewSubmit={onReviewSubmit}
         />
       )}
     </div>

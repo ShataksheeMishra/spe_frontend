@@ -1,29 +1,28 @@
-const BASE_URL = 'http://localhost:8081/catalogue';
+const BASE_FETCH_URL = 'http://localhost:8081/catalogue/fetch';
+
 export const fetchBookDetail = async (bookId) => {
   const token = localStorage.getItem('token');
-  const url = `${BASE_URL}/booksById/${bookId}`;
 
-  const res = await fetch(url, {
+  // Use query param id, not path param
+  const url = new URL(BASE_FETCH_URL);
+  url.searchParams.append('id', bookId);
+
+  const res = await fetch(url.toString(), {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   if (!res.ok) {
-    const errorText = await res.text(); // might be plain text (e.g. "Book not found")
+    const errorText = await res.text();
     throw new Error(`Failed to fetch book detail: ${errorText}`);
   }
 
-  let json;
-  try {
-    json = await res.json();
-  } catch (err) {
-    throw new Error('Invalid JSON response from server');
+  const json = await res.json();
+
+  if (!json.success) {
+    throw new Error(json.message || 'Failed to load book');
   }
 
-  if (!json || !json.success) {
-    throw new Error(json?.message || 'Failed to load book');
-  }
-
-  return json.data;
+  return json.data;  // Return the book data
 };

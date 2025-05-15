@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { submitReview } from '../api/books';
+import { submitReview } from '../api/fetchReviews';
+
+function parseJwt(token) {
+  if (!token) return null;
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
 
 const ReviewModal = ({ bookId, onClose, onReviewSubmit }) => {
   const [title, setTitle] = useState('');
@@ -8,10 +25,28 @@ const ReviewModal = ({ bookId, onClose, onReviewSubmit }) => {
 
   const handleSubmit = async () => {
     try {
-      await postReview(bookId, { title, review, rating });
-      onReviewSubmit(); // refresh reviews
+      const token = localStorage.getItem('token');
+      const decoded = parseJwt(token);
+      const userId = decoded ? (decoded.userId || decoded.sub || decoded.id) : null;
+
+      if (!userId) {
+        alert('User not logged in');
+        return;
+      }
+
+      const reviewData = {
+        userId: Number(userId),
+        bookId: Number(bookId),
+        title,
+        review,
+        rating: Number(rating),
+      };
+
+      await submitReview(reviewData); // unified call
+
+      onReviewSubmit();
     } catch (err) {
-      alert('Error submitting review');
+      alert('Error submitting review: ' + err.message);
     }
   };
 

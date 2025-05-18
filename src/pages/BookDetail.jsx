@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchBookDetail } from '../api/fetchBooksDetails';  // Your book detail API
 import { fetchBookReviews } from '../api/fetchReviews';      // Your review API (adjust path if needed)
 import ReviewModal from '../pages/ReviewModal';
+import { addToCart } from '../api/order'; // Adjust path based on your structure
+
 import '../styles/BookDetail.css';
 
 const BookDetail = () => {
@@ -35,9 +37,22 @@ const BookDetail = () => {
     setShowReviewModal(false);
   };
 
-  const handleAddToCart = () => {
-    navigate('/cart');
-  };
+  // const handleAddToCart = () => {
+  //   navigate('/cart');
+  // };
+
+const handleAddToCart = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');  // You must store this at login
+
+    await addToCart(userId, book.id, token);
+    alert('Book added to cart!');
+  } catch (err) {
+    console.error('Add to cart failed:', err);
+    alert('Failed to add book to cart');
+  }
+};
 
   const handleBorrow = () => {
     navigate('/borrow');

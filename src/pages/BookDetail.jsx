@@ -48,11 +48,30 @@ const handleAddToCart = async () => {
 
     await addToCart(userId, book.id, token);
     alert('Book added to cart!');
+ navigate('/cart'); 
   } catch (err) {
     console.error('Add to cart failed:', err);
     alert('Failed to add book to cart');
   }
 };
+// import { useNavigate } from 'react-router-dom'; // at the top of your component
+
+// const navigate = useNavigate(); // inside your component
+
+// const handleAddToCart = async () => {
+//   try {
+//     const token = localStorage.getItem('token');
+//     const userId = localStorage.getItem('userId');  // You must store this at login
+
+//     await addToCart(userId, book.id, token);
+//     alert('Book added to cart!');
+//     navigate('/cart'); // ✅ Redirect to cart page
+//   } catch (err) {
+//     console.error('Add to cart failed:', err);
+//     alert('Failed to add book to cart');
+//   }
+
+
 
   const handleBorrow = () => {
     navigate('/borrow');

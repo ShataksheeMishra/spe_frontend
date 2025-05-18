@@ -4,7 +4,9 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Catalogue from './pages/Catalogue';
 import BookDetail from './pages/BookDetail';
-import Cart from './pages/Cart'; // 🆕 Import CartPage
+import Cart from './pages/Cart'; 
+import YourOrders from './pages/YourOrders'; // adjust path if needed
+
 import './App.css';
 
 const App = () => {
@@ -16,6 +18,7 @@ const App = () => {
         <Route path="/catalogue" element={<Catalogue />} />
         <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/cart" element={<Cart/>} /> {/* 🆕 Add cart route */}
+         <Route path="/YourOrders" element={<YourOrders />} /> 
       </Routes>
     </Router>
   );

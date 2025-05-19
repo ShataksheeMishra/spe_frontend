@@ -39,6 +39,8 @@
 const USE_MOCK = false;
 const BASE_URL = 'http://localhost:8081/catalogue/books';
 const SEARCH_URL = 'http://localhost:8081/catalogue/search';
+// const BASE_URL = 'http://192.168.49.2:30001/catalogue/books';
+// const SEARCH_URL = 'http://192.168.49.2:30001/catalogue/search';
 
 export const fetchBooks = async (page = 0, size = 8, search = '') => {
   if (USE_MOCK) {

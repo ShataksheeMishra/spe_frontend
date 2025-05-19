@@ -44,6 +44,7 @@ function parseJwt(token) {
 const USE_MOCK = false;
 
 const BASE_URL = 'http://localhost:8081';
+//const BASE_URL = 'http://192.168.49.2:30001';
 
 export const login = async (email, password) => {
   if (USE_MOCK) {

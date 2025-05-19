@@ -16,6 +16,7 @@ const SignUp = () => {
     try {
       const res = await signup(form.first_name, form.last_name, form.email, form.password);
       localStorage.setItem('token', res.token);
+      localStorage.setItem('userId', res.userId);
       navigate('/catalogue');
     } catch (error) {
       alert(error.message);

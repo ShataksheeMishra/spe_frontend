@@ -68,12 +68,13 @@ const res = await fetch(`${BASE_URL}/user/auth/login`, {
   if (!res.ok) {
     throw new Error('Login failed');
   }
-
-  const token = await res.text();  // backend sends plain token string
+console.log(res)
+  const data = await res.json(); 
+  const token = data.token // backend sends plain token string
   console.log('Received token:', token);
 
 localStorage.setItem('token', token);
-localStorage.setItem('userId', '2');  // test with a valid numeric user id
+localStorage.setItem('userId', data.userId);  // test with a valid numeric user id
 
 console.log('Token saved in localStorage:', localStorage.getItem('token'));// ✅ save to localStorage
 

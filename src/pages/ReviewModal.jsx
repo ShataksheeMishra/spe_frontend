@@ -27,7 +27,7 @@ const ReviewModal = ({ bookId, onClose, onReviewSubmit }) => {
     try {
       const token = localStorage.getItem('token');
       const decoded = parseJwt(token);
-      const userId = decoded ? (decoded.userId || decoded.sub || decoded.id) : null;
+      const userId = localStorage.getItem('userId');
 
       if (!userId) {
         alert('User not logged in');

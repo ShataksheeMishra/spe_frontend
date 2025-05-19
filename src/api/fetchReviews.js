@@ -33,10 +33,12 @@ const REVIEW_URL = 'http://localhost:8081/review';
  * Get all reviews for a specific book
  */
 export const fetchBookReviews = async (bookId) => {
+  const token=localStorage.getItem("token")
   const res = await fetch(`${REVIEW_URL}/book/${bookId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
   });
 
@@ -44,8 +46,8 @@ export const fetchBookReviews = async (bookId) => {
   if (!res.ok || !json.success) {
     throw new Error(json.message || 'Failed to fetch reviews');
   }
-
-  return json.data; // This should be the array of reviews
+  console.log(json.reviews); // <-- Log the actual key
+  return json.reviews; // <
 };
 
 /**

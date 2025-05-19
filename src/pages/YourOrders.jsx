@@ -33,10 +33,11 @@ const YourOrders = () => {
         <div className="orders-list">
           {orders.map((order, index) => (
             <div key={index} className="order-card">
-              <h3>{order.bookName}</h3>
-              <p>Price: ₹{order.price}</p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Order Date: {new Date(order.orderDate).toLocaleString()}</p>
+              {/* <h3>{order.bookName}</h3> */}
+              <p>OrderId: {order.orderId}</p>
+              <p>Price: ₹{order.totalAmount}</p>
+              
+              <p>Order Date: {new Date(order.orderedAt).toLocaleString()}</p>
             </div>
           ))}
         </div>

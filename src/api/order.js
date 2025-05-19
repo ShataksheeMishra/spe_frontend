@@ -107,14 +107,20 @@ export const fetchCart = async (userId, jwtToken) => {
 //   };
 // };
 
-export const updateQuantity = async (cartItemId, newQuantity,token) => {
-  const response = await axios.post(`${BASE_URL}/update-quantity`, {
-    cartItemId,
-    newQuantity,
-     headers: {
-        Authorization: `Bearer ${token}`,
-      },
-  });
+export const updateQuantity = async (cartItemId, newQuantity, token) => {
+  const response = await axios.post(
+    `${BASE_URL}/update-quantity`,
+    {
+      cartItemId,
+      newQuantity
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
   return response.data;
 };
 
@@ -145,9 +151,11 @@ export const getUserOrders = async (userId, token) => {
     { userId },
     {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     }
   );
+  console.log(response.data)
   return response.data;
 };

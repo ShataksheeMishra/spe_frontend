@@ -185,6 +185,8 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [cartId, setCartId] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const navigate = useNavigate();
 
   const loadCart = async () => {
@@ -198,6 +200,8 @@ const CartPage = () => {
       if (data.cartItems.length > 0) {
         setCartId(data.cartItems[0].cart.cartId);
       }
+        // Set total price from backend
+    setTotalPrice(data.totalPrice || 0);
 
       // Initialize quantities for each item
       const initialQuantities = {};
@@ -217,7 +221,8 @@ const CartPage = () => {
 const handleUpdateQuantity = async (cartItemId, quantity) => {
   try {
     const token = localStorage.getItem('token');
-    await updateQuantity(cartItemId, quantity, token);
+    const data = await updateQuantity(cartItemId, quantity, token);
+    console.log(data);
     await loadCart();
   } catch (err) {
     console.error('Error updating quantity:', err);
@@ -244,12 +249,12 @@ const handleUpdateQuantity = async (cartItemId, quantity) => {
     }
   };
 
-  const calculateTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  };
+  // const calculateTotal = () => {
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.price * item.quantity,
+  //     0
+  //   );
+  // };
 
   return (
     <div className="cart-container">
@@ -288,7 +293,7 @@ const handleUpdateQuantity = async (cartItemId, quantity) => {
               </div>
             </div>
           ))}
-          <h3>Total: ₹{calculateTotal()}</h3>
+         <h3>Total: ₹{totalPrice}</h3>
           <button className="place-order-btn" onClick={handlePlaceOrder}>
             Place Order
           </button>

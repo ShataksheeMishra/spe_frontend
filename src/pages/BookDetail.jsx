@@ -4,7 +4,7 @@ import { fetchBookDetail } from '../api/fetchBooksDetails';  // Your book detail
 import { fetchBookReviews } from '../api/fetchReviews';      // Your review API (adjust path if needed)
 import ReviewModal from '../pages/ReviewModal';
 import { addToCart } from '../api/order'; // Adjust path based on your structure
-
+import { addBorrow } from '../api/borrow';
 import '../styles/BookDetail.css';
 
 const BookDetail = () => {
@@ -73,9 +73,17 @@ const handleAddToCart = async () => {
 
 
 
-  const handleBorrow = () => {
-    navigate('/borrow');
-  };
+ const handleBorrow = async (bookId) => {
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  
+  try {
+    await addBorrow(userId, bookId, token);
+    navigate('/borrow'); // Redirect to BorrowPage
+  } catch (err) {
+    console.error('Failed to borrow book:', err);
+  }
+};
 
   if (!book) return <div>Loading...</div>;
 
@@ -96,7 +104,8 @@ const handleAddToCart = async () => {
         <p><strong>ISBN:</strong> {book.isbn}</p>
 
         <button onClick={handleAddToCart}>Add to Cart</button>
-        <button onClick={handleBorrow}>Borrow</button>
+       <button onClick={() => handleBorrow(bookId)}>Borrow</button>
+
         <button onClick={() => setShowReviewModal(true)}>Write a Review</button>
 
         <h3>Reviews</h3>

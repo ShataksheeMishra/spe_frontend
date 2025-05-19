@@ -5,7 +5,8 @@ import SignUp from './pages/SignUp';
 import Catalogue from './pages/Catalogue';
 import BookDetail from './pages/BookDetail';
 import Cart from './pages/Cart'; 
-import YourOrders from './pages/YourOrders'; // adjust path if needed
+import YourOrders from './pages/YourOrders';
+import Borrow from './pages/Borrow';
 
 import './App.css';
 
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/books/:bookId" element={<BookDetail />} />
         <Route path="/cart" element={<Cart/>} /> {/* 🆕 Add cart route */}
          <Route path="/YourOrders" element={<YourOrders />} /> 
+         <Route path="/borrow" element={<Borrow/>} />
       </Routes>
     </Router>
   );

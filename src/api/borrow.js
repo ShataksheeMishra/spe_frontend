@@ -1,5 +1,6 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:8081/borrow'; // Adjust to your gateway if needed
+import { BASE_API_URL } from '../apiConfig'
+const BASE_URL = `${BASE_API_URL}/borrow`; // Adjust to your gateway if needed
 
 export const addBorrow = async (userId, bookId, token) => {
   const response = await axios.post(`${BASE_URL}/add`, { userId, bookId }, {

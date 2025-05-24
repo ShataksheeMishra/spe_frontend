@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { submitReview } from '../api/fetchReviews';
+import '../styles/BookDetail.css';
 
 function parseJwt(token) {
   if (!token) return null;

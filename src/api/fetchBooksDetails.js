@@ -1,4 +1,5 @@
-const BASE_FETCH_URL = 'http://localhost:8081/catalogue/fetch';
+import { BASE_API_URL } from '../apiConfig'
+const BASE_FETCH_URL = `${BASE_API_URL}/catalogue/fetch`;
 
 export const fetchBookDetail = async (bookId) => {
   const token = localStorage.getItem('token');

@@ -1,6 +1,7 @@
+import { BASE_API_URL } from '../apiConfig'
 const USE_MOCK = false;  // set this to false when backend is ready
 
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = `${BASE_API_URL}/api`;
 
 export const login = async (email, password) => {
   if (USE_MOCK) {

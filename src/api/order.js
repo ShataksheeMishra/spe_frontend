@@ -1,7 +1,8 @@
 // const BASE_URL = 'http://localhost:8081/orders';
+import { BASE_API_URL } from '../apiConfig'
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/orders';
+const BASE_URL = `${BASE_API_URL}/orders`;
 
 export const addToCart = async (userId, bookId, jwtToken) => {
   const res = await fetch(`${BASE_URL}/add`, {

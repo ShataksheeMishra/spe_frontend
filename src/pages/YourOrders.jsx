@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUserOrders } from '../api/order';
+import NavigationBar from './navbar'; 
 import '../styles/YourOrders.css';
 
 const YourOrders = () => {
@@ -24,7 +25,7 @@ const YourOrders = () => {
     fetchOrders();
   }, []);
 
-  return (
+  return (<><NavigationBar/>
     <div className="your-orders-container">
       <h2>Your Orders</h2>
       {orders.length === 0 ? (
@@ -43,6 +44,7 @@ const YourOrders = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { fetchBookReviews } from '../api/fetchReviews';      // Your review API 
 import ReviewModal from '../pages/ReviewModal';
 import { addToCart } from '../api/order'; // Adjust path based on your structure
 import { addBorrow } from '../api/borrow';
+import NavigationBar from './navbar'; 
 import '../styles/BookDetail.css';
 
 const BookDetail = () => {
@@ -88,45 +89,55 @@ const handleAddToCart = async () => {
   if (!book) return <div>Loading...</div>;
 
   return (
-    <div className="book-detail-container">
-      <div className="book-image">
-        <img src={book.imageUrl} alt={book.title} />
-      </div>
+     <>
+          <NavigationBar /> 
+      <div classame="book-detail-page-wrapper">
+    <div className="book-detail-page">
+  <div className="book-image">
+    <img src={book.imageUrl} alt={book.title} />
+  </div>
 
-      <div className="book-info">
-        <h2>{book.title}</h2>
-        <p><strong>Authors:</strong> {book.authors || 'Unknown'}</p>
-        <p><strong>Genres:</strong> {book.genres || 'N/A'}</p>
-        <p><strong>Description:</strong> {book.description || 'No description available.'}</p>
-        <p><strong>Pages:</strong> {book.pages}</p>
-        <p><strong>Price:</strong> ₹{book.price ?? 'Not Available'}</p>
-        <p><strong>Average Rating:</strong> ⭐ {book.rating || 'No ratings yet'}</p>
-        <p><strong>ISBN:</strong> {book.isbn}</p>
+  <div className="book-info">
+    <h2>{book.title}</h2>
+    <p><strong>Authors:</strong> {book.authors || 'Unknown'}</p>
+    <p><strong>Genres:</strong> {book.genres || 'N/A'}</p>
+    <p><strong>Description:</strong> {book.description || 'No description available.'}</p>
+    <p><strong>Pages:</strong> {book.pages}</p>
+    <p><strong>Price:</strong> ₹{book.price ?? 'Not Available'}</p>
+    <p><strong>Average Rating:</strong> ⭐ {book.rating || 'No ratings yet'}</p>
+    <p><strong>ISBN:</strong> {book.isbn}</p>
 
-        <button onClick={handleAddToCart}>Add to Cart</button>
-       <button onClick={() => handleBorrow(bookId)}>Borrow</button>
-
-        <button onClick={() => setShowReviewModal(true)}>Write a Review</button>
-
-        <h3>Reviews</h3>
-        <ul>
-          {reviews.length > 0 ? reviews.map((review, idx) => (
-            <li key={idx}>
-              <strong>{review.title || `User ${review.userId}`}</strong>: ⭐ {review.rating}<br />
-              {review.review}
-            </li>
-          )) : <p>No reviews yet.</p>}
-        </ul>
-      </div>
-
-      {showReviewModal && (
-        <ReviewModal
-          bookId={bookId}
-          onClose={() => setShowReviewModal(false)}
-          onReviewSubmit={onReviewSubmit}
-        />
-      )}
+    <div className="book-buttons">
+      <button onClick={handleAddToCart}>Add to Cart</button>
+      <button onClick={() => handleBorrow(bookId)}>Borrow</button>
+      <button onClick={() => setShowReviewModal(true)}>Write a Review</button>
     </div>
+
+    <div className="reviews-section">
+      <h3>Reviews</h3>
+      <ul>
+        {reviews.length > 0 ? reviews.map((review, idx) => (
+          <li key={idx}>
+            <strong>{review.title || `User ${review.userId}`}</strong>: ⭐ {review.rating}<br />
+            {review.review}
+          </li>
+        )) : <p>No reviews yet.</p>}
+      </ul>
+    </div>
+  </div>
+
+  {showReviewModal && (
+    <ReviewModal
+      bookId={bookId}
+      onClose={() => setShowReviewModal(false)}
+      onReviewSubmit={onReviewSubmit}
+    />
+  )}
+</div>
+
+
+</div>
+    </>
   );
 };
 

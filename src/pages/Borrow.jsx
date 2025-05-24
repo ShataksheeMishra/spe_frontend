@@ -54,6 +54,7 @@
 // export default BorrowPage;
 import React, { useEffect, useState } from 'react';
 import { getUserBorrows, returnBook } from '../api/borrow';
+import NavigationBar from './navbar'; 
 import '../styles/Borrow.css';
 
 const BorrowPage = () => {
@@ -85,6 +86,8 @@ const BorrowPage = () => {
   }, []);
 
   return (
+    <>
+    <NavigationBar/>
     <div className="borrow-page">
       <h2>Your Borrowed Books</h2>
       {borrows.length === 0 ? (
@@ -110,6 +113,7 @@ const BorrowPage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

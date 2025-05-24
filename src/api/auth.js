@@ -24,26 +24,26 @@
 //   return res.json();
 // };
 // Toggle this to true to use mock data instead of real API calls
-function parseJwt(token) {
-  try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-    return JSON.parse(jsonPayload);
-  } catch (e) {
-    console.error('Failed to parse JWT', e);
-    return null;
-  }
-}
-
+// function parseJwt(token) {
+//   try {
+//     const base64Url = token.split('.')[1];
+//     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+//     const jsonPayload = decodeURIComponent(
+//       atob(base64)
+//         .split('')
+//         .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+//         .join('')
+//     );
+//     return JSON.parse(jsonPayload);
+//   } catch (e) {
+//     console.error('Failed to parse JWT', e);
+//     return null;
+//   }
+// }
+import { BASE_API_URL } from '../apiConfig'
 const USE_MOCK = false;
 
-const BASE_URL = 'http://localhost:8081';
+// const BASE_URL = 'http://localhost:8081';
 //const BASE_URL = 'http://192.168.49.2:30001';
 
 export const login = async (email, password) => {
@@ -60,7 +60,7 @@ export const login = async (email, password) => {
   }
 
 
-const res = await fetch(`${BASE_URL}/user/auth/login`, {
+const res = await fetch(`${BASE_API_URL}/user/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -98,7 +98,7 @@ export const signup = async (first_name, last_name, email, password) => {
     });
   }
 
-  const res = await fetch(`${BASE_URL}/user/auth/signup`, {
+  const res = await fetch(`${BASE_API_URL}/user/auth/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ first_name, last_name, email, password }),

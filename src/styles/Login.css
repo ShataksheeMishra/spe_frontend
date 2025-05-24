@@ -1,9 +1,15 @@
+/* body {
+  margin: 0;
+   font-family: 'Times New Roman', Times, serif;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+}
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f7fa;
+  background-color: #1a7465;
 }
 
 .login-form {
@@ -62,4 +68,72 @@
 .signup-link:hover {
   text-decoration: underline;
   color: #0056b3;
+} */
+ 
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-bg); /* Match the rest of the app */
 }
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.login-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+.login-form button {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: #0c5a47;
+}
+
+.redirect-signup {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.signup-link {
+  color: var(--accent-color);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+  color: var(--accent-hover);
+}
+

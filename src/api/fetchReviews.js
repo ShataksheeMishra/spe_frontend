@@ -1,7 +1,8 @@
+import { BASE_API_URL } from '../apiConfig'
 const USE_MOCK = false;
 
 // const BOOK_DETAIL_URL = 'http://localhost:8081/catalogue/fetch';
-const REVIEW_URL = 'http://localhost:8081/review';
+const REVIEW_URL = `${BASE_API_URL}/review`;
 
 /**
  * Get full details of a specific book by ID

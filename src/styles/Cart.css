@@ -40,7 +40,7 @@
 }
 
 .actions button {
-  background-color: #ff4d4d;
+  background-color: #01160e;
   color: white;
   border: none;
   padding: 0.3rem 0.6rem;
@@ -49,14 +49,14 @@
 }
 
 .actions button:hover {
-  background-color: #e60000;
+  background-color: #2b7222;
 }
 
 .place-order-btn {
   margin-top: 1rem;
   width: 100%;
   padding: 0.7rem;
-  background-color: #28a745;
+  background-color: #7b8f82;
   color: white;
   border: none;
   font-weight: bold;

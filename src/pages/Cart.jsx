@@ -179,6 +179,7 @@ import {
   removeItem,
 } from '../api/order';
 import { useNavigate } from 'react-router-dom';
+import NavigationBar from './navbar'; 
 import '../styles/Cart.css';
 
 const CartPage = () => {
@@ -256,8 +257,9 @@ const handleUpdateQuantity = async (cartItemId, quantity) => {
   //   );
   // };
 
-  return (
+  return (<>  <NavigationBar/>
     <div className="cart-container">
+    
       <h2>Your Cart</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
@@ -300,6 +302,7 @@ const handleUpdateQuantity = async (cartItemId, quantity) => {
         </>
       )}
     </div>
+    </>
   );
 };
 
